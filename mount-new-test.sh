@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 check_mount() {
     # 1: Check if this dir is mounted
