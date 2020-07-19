@@ -3,9 +3,11 @@
 check_mount() {
     # 1: Check if this dir is mounted
     if [[ $(findmnt -M "$1") ]]; then
-        echo "$1 is mounted.";return 1
+        printf "$1 is mounted."
+        return 1
     else
-        echo "$1 is not mounted.";return 0
+        printf "$1 is not mounted."
+        return 0
     fi
 }
 
