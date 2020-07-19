@@ -19,4 +19,30 @@ mounter() {
     fi
 }
 
+# modified for s3fs
+mounter_s3fs() {
+    # 1: bucket name
+    # 2: mount target dir
+    # 3: s3 endpoint full url
+    # 4: Location of aws credential file. File should contain creds in the format "<key>:<secret>"
+    # 4: owner
+
+    BUCKET=$1
+    MOUNT_TARGET=$2
+    S3_URL=$3
+    PASSWORD_FILE=$4
+    THISOWNER=$5
+
+    if [[ ! $(findmnt -M "$DESTDIR") ]]; then
+        echo "Mounting $DESTDIR"
+        umount "$DESTDIR" 2>&1 > /dev/null # safety check
+        s3fs "$SRCDIR" "$DESTDIR" -o url="$S3_URL",passwd_file="$PASSWORD_FILE",use_cache="/tmp",nonempty
+        s3fs ttibackup-block /mnt/do-block -o url="https://sgp1.digitaloceanspaces.com",passwd_file=".do-block-keys",use_cache="/tmp",nonempty
+        chown "$THISOWNER:$THISOWNER" "$DESTDIR"
+    else
+        echo "$DESTDIR already mounted. Doing nothing."
+    fi
+}
+
 mounter "/dev/sda" "/home/backup2/backupdir" "backup2"
+mounter_s3fs "ttibackup-block" "/mnt/do-block" "https://sgp1.digitaloceanspaces.com" "/etc/.do-block-keys"
