@@ -16,7 +16,7 @@ auto_mount() {
 
     SRCDIR=$1
     DESTDIR=$2
-    THISOWNER=${3:backup2}
+    THISOWNER=$3
 
     if [[ $(check_mount "$DESTDIR") -eq 0 ]]; then
         echo "Mounting $DESTDIR"
