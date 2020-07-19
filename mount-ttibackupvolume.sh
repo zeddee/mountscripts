@@ -14,7 +14,7 @@ mounter() {
         umount "$DESTDIR" 2>&1 > /dev/null # safety check
         mount "$SRCDIR" "$DESTDIR"
         chown "$THISOWNER:$THISOWNER" "$DESTDIR"
-    else
+    # else
         # echo "$DESTDIR already mounted. Doing nothing."
     fi
 }
@@ -38,7 +38,7 @@ mounter_s3fs() {
         umount "$MOUNT_TARGET" 2>&1 > /dev/null # safety check
         s3fs "$BUCKET" "$MOUNT_TARGET" -o url="$S3_URL",passwd_file="$PASSWORD_FILE",use_cache="/tmp",nonempty,allow_other
         chown "$THISOWNER:$THISOWNER" "$MOUNT_TARGET"
-    else
+    # else
         # echo "$MOUNT_TARGET already mounted. Doing nothing."
     fi
 }
