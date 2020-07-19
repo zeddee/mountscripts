@@ -33,14 +33,13 @@ mounter_s3fs() {
     PASSWORD_FILE=$4
     THISOWNER=$5
 
-    if [[ ! $(findmnt -M "$DESTDIR") ]]; then
-        echo "Mounting $DESTDIR"
-        umount "$DESTDIR" 2>&1 > /dev/null # safety check
-        s3fs "$SRCDIR" "$DESTDIR" -o url="$S3_URL",passwd_file="$PASSWORD_FILE",use_cache="/tmp",nonempty
-        s3fs ttibackup-block /mnt/do-block -o url="https://sgp1.digitaloceanspaces.com",passwd_file=".do-block-keys",use_cache="/tmp",nonempty
-        chown "$THISOWNER:$THISOWNER" "$DESTDIR"
+    if [[ ! $(findmnt -M "$MOUNT_TARGET") ]]; then
+        echo "Mounting $MOUNT_TARGET"
+        umount "$MOUNT_TARGET" 2>&1 > /dev/null # safety check
+        s3fs "$BUCKET" "$MOUNT_TARGET" -o url="$S3_URL",passwd_file="$PASSWORD_FILE",use_cache="/tmp",nonempty
+        chown "$THISOWNER:$THISOWNER" "$MOUNT_TARGET"
     else
-        echo "$DESTDIR already mounted. Doing nothing."
+        echo "$MOUNT_TARGET already mounted. Doing nothing."
     fi
 }
 
