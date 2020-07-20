@@ -53,4 +53,4 @@ mounter() {
 # }
 
 mounter "/dev/sda" "/home/backup2/backupdir" "backup2"
-mounter_s3fs "ttibackup-block" "/home/backup2/do-block" "https://sgp1.digitaloceanspaces.com" "/etc/.do-block-keys"
+# mounter_s3fs "ttibackup-block" "/home/backup2/do-block" "https://sgp1.digitaloceanspaces.com" "/etc/.do-block-keys"
