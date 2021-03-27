@@ -12,12 +12,15 @@ mounter() {
     if [[ ! $(findmnt -M "$DESTDIR") ]]; then
         # echo "Mounting $DESTDIR"
         umount "$DESTDIR" 2>&1 > /dev/null # safety check
-        mount "$SRCDIR" "$DESTDIR"
+        mount -o discard,defaults,noatime "$SRCDIR" "$DESTDIR"
         chown "$THISOWNER:$THISOWNER" "$DESTDIR"
     # else
         # echo "$DESTDIR already mounted. Doing nothing."
     fi
 }
+
+# added -o discard,defaults,noatime
+# based on DigitalOcean docs: https://www.digitalocean.com/docs/volumes/how-to/mount/
 
 # s3fs doesn't work with jetbackups unfortunately.
 # maybe it's the size of the backup
