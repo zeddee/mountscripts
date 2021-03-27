@@ -55,5 +55,5 @@ mounter() {
 #     fi
 # }
 
-mounter "/dev/sda" "/home/backup2/backupdir" "backup2"
+mounter "/dev/disk/by-id/scsi-0DO_Volume_tti-backup-27mar2021" "/home/backup2/backupdir" "backup2"
 # mounter_s3fs "ttibackup-block" "/home/backup2/do-block" "https://sgp1.digitaloceanspaces.com" "/etc/.do-block-keys"
